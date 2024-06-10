@@ -1,6 +1,6 @@
 <?php
 
-class CloudClass extends WeatherClass
+final class CloudClass extends WeatherClass
 {
     const Cloud_id = 123;
 
@@ -48,5 +48,10 @@ class CloudClass extends WeatherClass
         }
 
         return $cloudResult;
+    }
+
+    abstract public function isRainyCloud()
+    {
+        return $this->isCloud() && $this->rainEnabled;
     }
 }
