@@ -6,9 +6,17 @@ final class CloudClass extends WeatherClass
 
     private $lists = [];
 
-    public function __construct(int $cloudId = 0)
+    private $region = 'canada';
+
+    private array $week = [];
+
+    public function __construct(int $cloudId = 0, string $region)
     {
         $this->cloudId = $cloudId;
+
+        $this->region = $region;
+
+        $this->week = array_fill(0, 7, new DayWeather());
     }
 
     public function isCloud(): bool
@@ -53,5 +61,22 @@ final class CloudClass extends WeatherClass
     abstract public function isRainyCloud()
     {
         return $this->isCloud() && $this->rainEnabled;
+    }
+
+    public function setWeekDayWeather(int $weekDay, bool $isSunny, bool $isRainy, bool $isSnowy, bool $isWindy, bool $isCloudy)
+    {
+        $this->week[$weekDay]
+            ->setIsSunny($isSunny)
+            ->setIsRainy($isRainy)
+            ->setIsSnowy($isSnowy)
+            ->setIsWindy($isWindy)
+            ->setIsCloudy($isCloudy);
+
+        return $this->week;
+    }
+
+    public function getWeekDayWeather(int $weekDay)
+    {
+        return $this->week[$weekDay];
     }
 }
